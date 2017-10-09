@@ -51,8 +51,32 @@ describe("Interpreter", function () {
             assert(interpreter.checkQuery('varon(juan)'));
         });
 
+        it('varon(pepe) should be true', function () {
+            assert(interpreter.checkQuery('varon(pepe)'));
+        });
+
+        it('varon(hector) should be true', function () {
+            assert(interpreter.checkQuery('varon(hector)'));
+        });
+
+        it('varon(roberto) should be true', function () {
+            assert(interpreter.checkQuery('varon(roberto)'));
+        });
+
+        it('varon(alejandro) should be true', function () {
+            assert(interpreter.checkQuery('varon(alejandro)'));
+        });
+
         it('varon(maria) should be false', function () {
             assert(interpreter.checkQuery('varon(maria)') === false);
+        });
+
+        it('mujer(maria) should be true', function () {
+            assert(interpreter.checkQuery('mujer(maria)'));
+        });
+
+        it('varon(cecilia) should be false', function () {
+            assert(interpreter.checkQuery('varon(cecilia)') == false);
         });
 
         it('mujer(cecilia) should be true', function () {
@@ -67,7 +91,9 @@ describe("Interpreter", function () {
             assert(interpreter.checkQuery('padre(mario, pepe)') === false);
         });
 
-        // TODO: Add more tests
+        it('padre(roberto, cecilia) should be true', function () {
+            assert(interpreter.checkQuery('padre(roberto, cecilia)'));
+        });
 
     });
 
@@ -83,7 +109,46 @@ describe("Interpreter", function () {
             assert(interpreter.checkQuery('hijo(pepe, juan)'));
         });
 
-        // TODO: Add more tests
+        it('hijo(pepe, roberto) should be false', function () {
+            assert(interpreter.checkQuery('hijo(pepe, roberto)') === false);
+        });
+        it('hija(maria, hector) should be true', function () {
+            assert(interpreter.checkQuery('hija(maria, hector)'));
+        });
+        it('hijo(pepa, juan) should be false', function () {
+            assert(interpreter.checkQuery('hijo(pepa, juan)') === false);
+        });
+
+    });
+
+    describe('Interpreter Errors', function () {
+
+        it('hijo(pepe, jua should throw a InvalidQueryError', function () {
+            try{
+                interpreter.checkQuery('hijo(pepe, jua');
+            }
+            catch(e){
+                assert(e.name == "Invalid Query");
+            };
+        });
+
+        it('(cecilia) should throw a InvalidQueryError', function () {
+            try{
+                interpreter.checkQuery('(cecilia)');
+            }
+            catch(e){
+                assert(e.name == "Invalid Query");
+            };
+        });
+
+        it('padre should throw a InvalidQueryError', function () {
+            try{
+                interpreter.checkQuery('padre');
+            }
+            catch(e){
+                assert(e.name == "Invalid Query");
+            };
+        });
 
     });
 
